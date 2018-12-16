@@ -8,6 +8,7 @@ This repo contains a slightly modified version of the client to work with Linux 
 
 It also contains a script I wrote to do solar panel maximum power point tracking to determine current at maximum power point. Tracking algo is modified incremental-conductance (IC) to reduce the time to find maximum power point. An example of its output at very low light condition (<50 W/m2) and decreasing irridiation:
 
+```bash
 Set to remote control
 Vset  voltsN ampsN voltsP deltaV sVoD deltaW watts
       12.435 0.001  0.000  0.000       0.000  0.000
@@ -34,8 +35,10 @@ Vset  voltsN ampsN voltsP deltaV sVoD deltaW watts
 07.18 07.188 0.005 07.188 +0.000 0.01 +0.000  0.037
 07.17 07.164 0.005 07.188 -0.024 0.01 +0.000  0.037
 MPPT found in 8.69 seconds
+```
 
 And another example around 100 W/m2 with increasing irridiation:
+```bash
 Set to remote control
 Vset  voltsN ampsN voltsP deltaV sVoD deltaW watts
       25.134 0.001  0.000  0.000       0.000  0.000
@@ -64,3 +67,4 @@ Vset  voltsN ampsN voltsP deltaV sVoD deltaW watts
 14.47 14.484 0.011 14.484 +0.000 0.02 +0.000  0.165
 14.49 14.484 0.011 14.484 +0.000 0.01 +0.000  0.165
 MPPT found in 9.36 seconds
+```
