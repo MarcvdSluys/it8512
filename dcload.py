@@ -30,13 +30,15 @@ through the DCLoad object.  This object can also be used as a COM
 server by running this module as a script to register it.  All the
 DCLoad object methods return strings.  All units into and out of the
 DCLoad object's methods are in SI units.
- 
+
+Requirements: pyserial; install with f.e. # pacman -S python2 python2-pyserial
+
 See the documentation file that came with this script.
 
 $RCSfile: dcload.py $ 
-$Revision: 1.0 $
-$Date: 2008/05/17 15:57:15 $
-$Author:  Don Peterson $
+$Revision: 1.1 $
+$Date: 2018/11/28 22:33:15 $
+$Author:  Don Peterson, Matt Venn, Ceriel Jacobs $
 '''
 
 from __future__ import division
@@ -592,7 +594,7 @@ class DCLoad(InstrumentInterface):
         power   = self.DecodeInteger(response[11:15])/self.convert_power
         op_state = hex(self.DecodeInteger(response[15]))
         demand_state = hex(self.DecodeInteger(response[16:18]))
-        s = [str(voltage) + " V", str(current) + " A", str(power) + " W", str(op_state), str(demand_state)]
+        s = [str(voltage), str(current), str(power), str(op_state), str(demand_state)]
         return join(s, "\t")
     # Returns model number, serial number, and firmware version number
     def GetProductInformation(self):
