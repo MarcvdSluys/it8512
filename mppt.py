@@ -1,3 +1,5 @@
+#!/bin/env python2
+
 '''
 Open Source Initiative OSI - The MIT License:Licensing
 Tue, 2006-10-31 04:56 nelson
@@ -136,8 +138,13 @@ if __name__ == '__main__':
 	  		port = '/dev/ttyUSB0'
 		elif os.path.exists('/dev/ttyUSB1'):
 			port = '/dev/ttyUSB1'
+                else:
+                        sys.exit('%s: Error: no serial device found' % sys.argv[0])
+                
+		print 'Using serial device on port', port
 		load = dcload.DCLoad()
 		TalkToLoad(load, port, 38400)
+                
 	except KeyboardInterrupt:
 		print('interrupted')
 		load.TurnLoadOff()
