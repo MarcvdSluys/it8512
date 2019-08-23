@@ -165,8 +165,7 @@ class InstrumentInterface:
     
     
     def SendCommand(self, command):
-        '''Sends the command to the serial stream and returns the 26 byte
-        response.
+        '''Sends the command to the serial stream and returns the 26 byte response.
         '''
         assert(len(command) == self.length_packet)
         self.sp.write(command)
@@ -176,8 +175,7 @@ class InstrumentInterface:
     
     
     def ResponseStatus(self, response):
-        '''Return a message string about what the response meant.  The
-        empty string means the response was OK.
+        '''Return a message string about what the response meant.  The empty string means the response was OK.
         '''
         responses = {
             0x90 : "Wrong checksum",
@@ -192,8 +190,8 @@ class InstrumentInterface:
     
     
     def CodeInteger(self, value, num_bytes=4):
-        '''Construct a little endian string for the indicated value.  Two
-        and 4 byte integers are the only ones allowed.
+        '''Construct a little endian string for the indicated value.  Two and 4 byte integers are the only ones
+        allowed.
         '''
         assert(num_bytes == 1 or num_bytes == 2 or num_bytes == 4)
         value = int(value)  # Make sure it's an integer
@@ -208,8 +206,7 @@ class InstrumentInterface:
     
     
     def DecodeInteger(self, str):
-        '''Construct an integer from the little endian string. 1, 2, and 4 byte 
-        strings are the only ones allowed.
+        '''Construct an integer from the little endian string. 1, 2, and 4 byte strings are the only ones allowed.
         '''
         assert(len(str) == 1 or len(str) == 2 or len(str) == 4)
         n  = ord(str[0])
@@ -222,9 +219,8 @@ class InstrumentInterface:
     
     
     def GetReserved(self, num_used):
-        '''Construct a string of nul characters of such length to pad a
-        command to one less than the packet size (leaves room for the 
-        checksum byte.
+        '''Construct a string of nul characters of such length to pad a command to one less than the packet size
+        (leaves room for the checksum byte.
         '''
         num = self.length_packet - num_used - 1
         assert(num > 0)
@@ -243,8 +239,7 @@ class InstrumentInterface:
             
     
     def GetCommand(self, command, value, num_bytes=4):
-        '''Construct the command with an integer value of 0, 1, 2, or 
-        4 bytes.
+        '''Construct the command with an integer value of 0, 1, 2, or 4 bytes.
         '''
         cmd = self.StartCommand(command)
         if num_bytes > 0:
@@ -277,8 +272,8 @@ class InstrumentInterface:
     
     
     def SendIntegerToLoad(self, byte, value, msg, num_bytes=4):
-        '''Send the indicated command along with value encoded as an integer
-        of the specified size.  Return the instrument's response status.
+        '''Send the indicated command along with value encoded as an integer of the specified size.  Return the
+        instrument's response status.
         '''
         cmd = self.GetCommand(byte, value, num_bytes)
         response = self.SendCommand(cmd)
@@ -287,10 +282,9 @@ class InstrumentInterface:
     
     
     def GetIntegerFromLoad(self, cmd_byte, msg, num_bytes=4):
-        '''Construct a command from the byte in cmd_byte, send it, get
-        the response, then decode the response into an integer with the
-        number of bytes in num_bytes.  msg is the debugging string for
-        the printout.  Return the integer.
+        '''Construct a command from the byte in cmd_byte, send it, get the response, then decode the response into an
+        integer with the number of bytes in num_bytes.  msg is the debugging string for the printout.  Return
+        the integer.
         '''
         assert(num_bytes == 1 or num_bytes == 2 or num_bytes == 4)
         cmd = self.StartCommand(cmd_byte)
@@ -493,8 +487,7 @@ class DCLoad(InstrumentInterface):
     
     
     def SetTransient(self, mode, A, A_time_s, B, B_time_s, operation="continuous"):
-        '''Sets up the transient operation mode.  mode is one of 
-        "CC", "CV", "CW", or "CR".
+        '''Sets up the transient operation mode.  mode is one of "CC", "CV", "CW", or "CR".
         '''
         if mode.lower() not in self.modes:
             raise Exception("Unknown mode")
@@ -634,10 +627,10 @@ class DCLoad(InstrumentInterface):
     
     
     def SetTriggerSource(self, source="immediate"):
-        '''Set how the instrument will be triggered.
-        "immediate" means triggered from the front panel.
-        "external" means triggered by a TTL signal on the rear panel.
-        "bus" means a software trigger (see TriggerLoad()).
+        '''Set how the instrument will be triggered:
+        - "immediate" means triggered from the front panel;
+        - "external"  means triggered by a TTL signal on the rear panel;
+        - "bus"       means a software trigger (see TriggerLoad()).
         '''
         trigger = {"immediate":0, "external":1, "bus":2}
         if source not in trigger:
@@ -655,8 +648,7 @@ class DCLoad(InstrumentInterface):
     
     
     def TriggerLoad(self):
-        '''Provide a software trigger.  This is only of use when the trigger
-        mode is set to "bus".
+        '''Provide a software trigger.  This is only of use when the trigger mode is set to "bus".
         '''
         cmd = self.StartCommand(0x5A)
         cmd += self.Reserved(3)
@@ -684,9 +676,8 @@ class DCLoad(InstrumentInterface):
     
     
     def SetFunction(self, function="fixed"):
-        '''Set the function (type of operation) of the load.
-        function is one of "fixed", "short", "transient", or "battery".
-        Note "list" is intentionally left out for now.
+        '''Set the function (type of operation) of the load.  function is one of "fixed", "short", "transient", or
+        "battery".  Note "list" is intentionally left out for now.
         '''
         msg = "Set function to %s" % function
         functions = {"fixed":0, "short":1, "transient":2, "battery":4}
@@ -702,8 +693,7 @@ class DCLoad(InstrumentInterface):
     
     
     def GetInputValues(self):
-        '''Returns voltage in V, current in A, and power in W, op_state byte,
-        and demand_state byte.
+        '''Returns voltage in V, current in A, and power in W, op_state byte, and demand_state byte.
         '''
         cmd = self.StartCommand(0x5F)
         cmd += self.Reserved(3)
@@ -734,6 +724,8 @@ class DCLoad(InstrumentInterface):
         fw += hex(ord(response[8]))[2:] 
         serial_number = response[10:20]
         return join((str(model), str(serial_number), str(fw)), "\t")
+
+
 
 
 def Register(pyclass=DCLoad):

@@ -1,18 +1,15 @@
 #!/bin/env python2
 
-'''
-Open Source Initiative OSI - The MIT License:Licensing
+'''Open Source Initiative OSI - The MIT License:Licensing
 Tue, 2006-10-31 04:56 nelson
 
 The MIT License
 
 Copyright (c) 2018 Ceriel Jacobs
 
-Precise Solar Panel Maximum Power Point Tracker (mppt) and module sorter 
-for custom set operating level conversion.
-Custom irridiation level because it makes no sense to current sort modules
-at STC when average power generation is at 470 W/m2 in the South East of
-The Netherlands), 
+Precise Solar Panel Maximum Power Point Tracker (mppt) and module sorter for custom set operating level
+conversion.  Custom irridiation level because it makes no sense to current sort modules at STC when average
+power generation is at 470 W/m2 in the South East of The Netherlands),
 
 Using: 
 - Itech IT8512A+ e-load with E-133 USB (ID 067b:2303) set to 38400 8N1
@@ -24,6 +21,7 @@ Meas. accuracy        IT8512A+        FS        LMG95            FS
  Voltage:             0.025%+0.025%FS    18|120    0.02%+0.06%FS    6|12.5|25|60
  Current:             0.05%+0.05%FS    3|30    0.02%+0.06%FS    0.15|.3|.6|1.2
  Power:                0.1%+0.1%FS                0.03%+0.06%FS
+
 '''
 
 set_volts_delta_low = 0.32  # Lowest voltage change that makes sense for IT8512A+ current measurement accuracy
